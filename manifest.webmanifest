@@ -1,0 +1,17 @@
+{
+  "name": "Tempo — Couleur EDF du jour",
+  "short_name": "Tempo",
+  "description": "Couleur EDF Tempo du jour et de demain, prix du kWh en temps réel et conseils de consommation.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "categories": ["utilities", "lifestyle"]
+}
