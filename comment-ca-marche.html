@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment ça marche — Tempo</title>
+    <meta name="description" content="Comprendre l'option EDF Tempo : les trois couleurs Bleu/Blanc/Rouge, les heures pleines et creuses, les quotas de la saison, la couleur de demain et d'où viennent les données.">
+    <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f5f1e8" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <!-- Applique le thème enregistré avant le premier rendu (évite le flash). -->
+    <script>(function(){try{var t=localStorage.getItem('tempo-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="comment-ca-marche.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <a class="logo" href="index.html">TEMP<span>O</span></a>
+                <div class="tagline">— Comment ça marche</div>
+            </div>
+            <div class="meta">
+                <div class="meta-right">
+                    <a class="nav-link" href="index.html">← Retour à l'outil</a>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Changer de thème" title="Changer de thème">
+                        <span id="themeIcon" aria-hidden="true">☾</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero hiw-hero">
+            <h1>L'option <em>Tempo,</em> en clair.</h1>
+            <p>Tempo est une option du Tarif Bleu d'EDF : le prix du kWh change <strong>chaque jour</strong> selon une
+               couleur — Bleu, Blanc ou Rouge — et selon l'heure. L'idée : payer beaucoup moins cher la majorité de
+               l'année, en échange de quelques journées très chères qu'on apprend à éviter.</p>
+        </section>
+
+        <section class="stats" aria-label="Chiffres clés">
+            <div class="stat"><div class="stat-num" data-count="300">0</div><div class="stat-lbl">jours bleus / an</div></div>
+            <div class="stat"><div class="stat-num" data-count="43">0</div><div class="stat-lbl">jours blancs / an</div></div>
+            <div class="stat"><div class="stat-num" data-count="22">0</div><div class="stat-lbl">jours rouges / an</div></div>
+            <div class="stat"><div class="stat-num">×5,3</div><div class="stat-lbl">écart de prix max</div></div>
+        </section>
+
+        <p class="flow-intro">Tout ce qu'il faut savoir <span class="arrow">↓</span></p>
+
+        <ol class="pipeline">
+
+            <li class="step card reveal">
+                <div class="step-head"><span class="step-num">01</span><h2>Trois couleurs, trois tarifs</h2></div>
+                <div class="step-body">
+                    <div class="step-text">
+                        <p>Chaque jour est <strong>Bleu</strong> (le moins cher), <strong>Blanc</strong> (intermédiaire) ou
+                           <strong>Rouge</strong> (très cher). Sur un jour rouge, le kWh en journée peut coûter
+                           <em>plus de 5 fois</em> le tarif d'un jour bleu.</p>
+                        <p>Tout l'intérêt de Tempo : décaler ses gros usages vers les jours bleus, et lever le pied
+                           les jours rouges.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="tcolors" aria-hidden="true">
+                            <div class="tcolor" data-color="bleu"><b>Bleu</b> le moins cher <span class="pq">≈ 16 c€/kWh</span></div>
+                            <div class="tcolor" data-color="blanc"><b>Blanc</b> intermédiaire <span class="pq">≈ 19 c€/kWh</span></div>
+                            <div class="tcolor" data-color="rouge"><b>Rouge</b> à éviter <span class="pq">≈ 71 c€/kWh</span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="step card reveal">
+                <div class="step-head"><span class="step-num">02</span><h2>Heures pleines & heures creuses</h2></div>
+                <div class="step-body">
+                    <div class="step-text">
+                        <p>En plus de la couleur, chaque journée a des <strong>heures creuses</strong> moins chères
+                           de <code>22 h</code> à <code>6 h</code>, et des <strong>heures pleines</strong> le reste du temps.</p>
+                        <p>Le bon réflexe : lancer lave-linge, chauffe-eau ou recharge de voiture <strong>après 22 h</strong>,
+                           surtout les jours blancs et rouges.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="daybar" aria-hidden="true">
+                            <div class="seg hc" style="flex-grow:6">creuses</div>
+                            <div class="seg hp" style="flex-grow:16">pleines</div>
+                            <div class="seg hc" style="flex-grow:2">creuses</div>
+                        </div>
+                        <p class="daybar-note">Une journée de 24 h : creuses <code>0–6 h</code>, pleines <code>6–22 h</code>, creuses <code>22–24 h</code>.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li class="step card reveal">
+                <div class="step-head"><span class="step-num">03</span><h2>La couleur de demain</h2></div>
+                <div class="step-body">
+                    <div class="step-text">
+                        <p>EDF annonce la couleur du lendemain <strong>la veille, vers 11 h</strong>. Avant cette heure,
+                           demain est affiché comme <em>« pas encore annoncé »</em> avec un compte à rebours.</p>
+                        <p>Cette anticipation est précieuse : elle laisse le temps de planifier ses usages — ou de
+                           décaler une lessive d'un jour rouge vers le bleu suivant.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="vchips">
+                            <span class="vchip">📅 Annonce ~11 h</span>
+                            <span class="vchip">⏳ Compte à rebours</span>
+                            <span class="vchip">🔵⚪🔴 dès qu'elle tombe</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="step card reveal">
+                <div class="step-head"><span class="step-num">04</span><h2>Des quotas, sur une saison</h2></div>
+                <div class="step-body">
+                    <div class="step-text">
+                        <p>Sur une saison Tempo (<code>1ᵉʳ sept → 31 août</code>), EDF est limité à
+                           <strong>22 jours rouges</strong>, <strong>43 blancs</strong> et le reste en bleus.</p>
+                        <p>Les rouges ne tombent que les <strong>jours ouvrés</strong>, de <strong>novembre à mars</strong>.
+                           Le site suit en direct combien de jours de chaque couleur ont déjà été consommés.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="vchips">
+                            <span class="vchip">🔴 22 rouges max</span>
+                            <span class="vchip">⚪ 43 blancs max</span>
+                            <span class="vchip">🔵 ~300 bleus</span>
+                            <span class="vchip">Rouges : nov → mars, ouvrés</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="step card reveal">
+                <div class="step-head"><span class="step-num">05</span><h2>D'où viennent les données</h2></div>
+                <div class="step-body">
+                    <div class="step-text">
+                        <p>Les couleurs proviennent de l'API publique <code>api-couleur-tempo.fr</code>, sans clé ni compte.
+                           Les tarifs sont la <strong>grille réglementée EDF</strong>, codée en clair dans le site et datée
+                           (à revérifier à chaque révision).</p>
+                        <p>Tout tourne <strong>dans votre navigateur</strong> : aucune donnée personnelle, aucun serveur,
+                           aucun traceur. Le site fonctionne même hors-ligne grâce au cache.</p>
+                    </div>
+                    <div class="step-visual">
+                        <div class="badges">
+                            <span class="badge">Sans clé API</span>
+                            <span class="badge">100% navigateur</span>
+                            <span class="badge">Hors-ligne (cache)</span>
+                            <span class="badge">Aucun traceur</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ol>
+
+        <section class="outro card reveal">
+            <h2>Et c'est tout — <em>côté navigateur.</em></h2>
+            <p>Pas de serveur, pas de dépendance, pas de données envoyées. Juste du HTML, du CSS et du JavaScript,
+               déployable tel quel sur GitHub&nbsp;Pages.</p>
+            <a class="cta" href="index.html">Voir la couleur du jour →</a>
+        </section>
+
+        <footer>
+            Projet indépendant, sans lien avec EDF · données couleurs :
+            <a href="https://www.api-couleur-tempo.fr" target="_blank" rel="noopener">api-couleur-tempo.fr</a>.
+        </footer>
+    </div>
+
+    <script>
+    (function () {
+        var icon = document.getElementById('themeIcon');
+        function apply(t) {
+            if (t === 'light') { document.documentElement.setAttribute('data-theme', 'light'); icon.textContent = '☀'; }
+            else { document.documentElement.removeAttribute('data-theme'); icon.textContent = '☾'; }
+        }
+        apply(localStorage.getItem('tempo-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+        document.getElementById('themeToggle').addEventListener('click', function () {
+            var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            localStorage.setItem('tempo-theme', next); apply(next);
+        });
+
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var reveals = document.querySelectorAll('.reveal');
+        if (reduce || !('IntersectionObserver' in window)) {
+            reveals.forEach(function (el) { el.classList.add('in'); });
+        } else {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { threshold: 0.18 });
+            reveals.forEach(function (el) { io.observe(el); });
+        }
+
+        var nums = document.querySelectorAll('.stat-num[data-count]');
+        function countUp(el) {
+            var target = parseInt(el.getAttribute('data-count'), 10);
+            if (reduce) { el.textContent = target.toLocaleString('fr-FR'); return; }
+            var start = null, dur = 1100;
+            function tick(ts) {
+                if (start === null) start = ts;
+                var p = Math.min(1, (ts - start) / dur);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased).toLocaleString('fr-FR');
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+        if (!('IntersectionObserver' in window)) {
+            nums.forEach(countUp);
+        } else {
+            var io2 = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); io2.unobserve(e.target); } });
+            }, { threshold: 0.6 });
+            nums.forEach(function (el) { io2.observe(el); });
+        }
+    })();
+    </script>
+</body>
+</html>
