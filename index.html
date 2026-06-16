@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMPO — Couleur EDF du jour & prix de l'électricité</title>
+    <meta name="description" content="La couleur EDF Tempo du jour et de demain (Bleu, Blanc, Rouge), le prix du kWh en temps réel, le bon moment pour consommer, les quotas de la saison et le calendrier complet. Gratuit, sans pub, sans compte.">
+    <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f5f1e8" media="(prefers-color-scheme: light)">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TEMPO — Couleur EDF du jour">
+    <meta property="og:description" content="Couleur Tempo du jour et de demain, prix du kWh en direct et conseils de consommation.">
+    <meta property="og:image" content="og-image.svg">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <!-- Applique le thème enregistré avant le premier rendu (évite le flash). -->
+    <script>(function(){try{var t=localStorage.getItem('tempo-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <div class="logo">TEMP<span>O</span></div>
+                <div class="tagline">— Couleur EDF · Temps réel</div>
+            </div>
+            <div class="meta">
+                <div class="meta-right">
+                    <a class="nav-link" href="comment-ca-marche.html">Comment ça marche →</a>
+                    <div id="status" data-state="cache"><span class="pulse" aria-hidden="true"></span>EDF Tempo</div>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Changer de thème" title="Changer de thème">
+                        <span id="themeIcon" aria-hidden="true">☾</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>La couleur <em>Tempo</em><br />du jour.</h1>
+            <p>Bleu, Blanc ou Rouge : le tarif EDF Tempo change chaque jour. Voici la couleur d'aujourd'hui et de demain, le prix du kWh en direct, et le bon moment pour lancer vos appareils.</p>
+        </section>
+
+        <!-- 1 · Statut : aujourd'hui & demain -->
+        <section class="status-grid" aria-label="Couleur du jour et de demain">
+            <div class="card day-card today-card" id="today-card" data-color="inconnu">
+                <div class="day-band" aria-hidden="true"></div>
+                <div class="day-label">Aujourd'hui</div>
+                <div class="day-name" id="today-name">—</div>
+                <div class="day-date" id="today-date">—</div>
+                <div class="today-meta">
+                    <span class="slot-badge" id="today-period" data-slot="hp">—</span>
+                    <div class="price-now">
+                        <div class="big" id="today-price">—</div>
+                        <div class="cap">prix actuel du kWh</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card day-card tomorrow-card" id="tomorrow-card" data-color="inconnu">
+                <div class="day-band" aria-hidden="true"></div>
+                <div class="day-label">Demain</div>
+                <div class="day-name" id="tomorrow-name">—</div>
+                <div class="day-date" id="tomorrow-date">demain</div>
+                <div class="tomorrow-note" id="tomorrow-note">—</div>
+            </div>
+        </section>
+
+        <!-- 2 · Conseil -->
+        <section class="card advice-card" id="advice-card" data-level="neutre" aria-live="polite">
+            <div class="section-head">→ Faut-il consommer maintenant ?</div>
+            <div class="advice-title" id="advice-title">—</div>
+            <p class="advice-detail" id="advice-detail">—</p>
+            <span class="advice-countdown" id="advice-countdown">—</span>
+        </section>
+
+        <!-- 3 · Grille tarifaire -->
+        <section class="card">
+            <div class="section-head">→ Grille tarifaire Tempo (c€/kWh TTC)</div>
+            <table class="tariff-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Couleur</th>
+                        <th scope="col">Heures pleines<br>6 h – 22 h</th>
+                        <th scope="col">Heures creuses<br>22 h – 6 h</th>
+                    </tr>
+                </thead>
+                <tbody id="tariff-body"></tbody>
+            </table>
+            <p class="tariff-foot">
+                Grille en vigueur depuis le <span id="tariff-date">—</span>. La cellule orange = tarif appliqué à l'instant.
+                Tarifs réglementés EDF, révisés ~deux fois par an —
+                <a href="https://particulier.edf.fr/fr/accueil/gestion-contrat/options/tempo.html" target="_blank" rel="noopener">vérifier sur edf.fr</a>.
+            </p>
+        </section>
+
+        <!-- 4 · Quotas de la saison -->
+        <section class="card">
+            <div class="section-head">→ Quotas de la saison (1ᵉʳ sept → 31 août)</div>
+            <div class="quotas" id="quotas"></div>
+        </section>
+
+        <!-- 5 · Calendrier -->
+        <section class="card">
+            <div class="section-head">→ Calendrier de la saison</div>
+            <div class="calendar" id="calendar" role="img" aria-label="Calendrier des couleurs Tempo de la saison"></div>
+            <div class="cal-legend">
+                <span><span class="swatch" data-color="bleu" aria-hidden="true"></span>Bleu</span>
+                <span><span class="swatch" data-color="blanc" aria-hidden="true"></span>Blanc</span>
+                <span><span class="swatch" data-color="rouge" aria-hidden="true"></span>Rouge</span>
+                <span><span class="swatch" data-color="inconnu" aria-hidden="true"></span>À venir</span>
+            </div>
+        </section>
+
+        <!-- 6 · Simulateur -->
+        <section class="card">
+            <div class="section-head">→ Combien coûte un usage ?</div>
+            <div class="sim-controls">
+                <div class="sim-field">
+                    <label for="sim-kwh">Conso</label>
+                    <input type="number" id="sim-kwh" value="1" min="0" step="0.5" inputmode="decimal" aria-label="Consommation en kWh"> kWh
+                </div>
+                <div class="sim-presets">
+                    <button class="sim-preset" data-kwh="1">Lave-linge · 1 kWh</button>
+                    <button class="sim-preset" data-kwh="2.5">Lave-vaisselle · 2,5 kWh</button>
+                    <button class="sim-preset" data-kwh="8">Chauffe-eau · 8 kWh</button>
+                    <button class="sim-preset" data-kwh="40">Recharge VE · 40 kWh</button>
+                </div>
+            </div>
+            <div class="sim-out">
+                <div class="sim-cell">
+                    <div class="lbl">Maintenant · <span id="sim-now-label">—</span></div>
+                    <div class="val" id="sim-now">—</div>
+                </div>
+                <div class="sim-cell best">
+                    <div class="lbl">Tarif le plus bas · Bleu heures creuses</div>
+                    <div class="val" id="sim-best">—</div>
+                </div>
+            </div>
+            <div class="sim-delta" id="sim-delta">—</div>
+        </section>
+
+        <footer>
+            Données couleurs : <a href="https://www.api-couleur-tempo.fr" target="_blank" rel="noopener">api-couleur-tempo.fr</a> ·
+            tarifs EDF indicatifs, à vérifier sur edf.fr · dernière mise à jour <span id="updated">—</span><br>
+            Projet indépendant, sans lien avec EDF. Aucune donnée personnelle collectée.
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
